@@ -1,0 +1,39 @@
+<h1>Listing specimens</h1>
+
+<table>
+  <tr>
+    <th>Species name</th>
+    <th>Common name</th>
+    <th>Collection site</th>
+    <th>Collection date</th>
+    <th>Sex</th>
+    <th>Weight</th>
+    <th>Age</th>
+    <th>Code</th>
+    <th>Picture</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @specimens.each do |specimen| %>
+  <tr>
+    <td><%= specimen.species.species_name unless specimen.species.nil? %></td>
+    <td><%= specimen.species.common_name unless specimen.species.nil? %></td>
+    <td><%= specimen.collection_site %></td>
+    <td><%= specimen.collection_date %></td>
+    <td><%= specimen.sex %></td>
+    <td><%= specimen.weight %></td>
+    <td><%= specimen.age %></td>
+    <td><%= specimen.code %></td>
+    <td><a href="<%= specimen.picture %>">Link</a></td>
+    <td><%= link_to 'Show', specimen %></td>
+    <td><%= link_to 'Edit', edit_specimen_path(specimen) %></td>
+    <td><%= link_to 'Destroy', specimen, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Specimen', new_specimen_path %>

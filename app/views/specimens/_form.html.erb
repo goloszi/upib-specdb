@@ -1,0 +1,67 @@
+<%= form_for(@specimen) do |f| %>
+
+  <% if @specimen.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@specimen.errors.count, "error") %> prohibited this specimen from being saved:</h2>
+
+      <ul>
+      <% @specimen.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% @specimen.build_species unless @specimen.species %>
+
+  <%= f.fields_for :species do |s| %>
+  <div class="field">
+    <%= s.label :species_name %><br />
+    <%= s.text_field :species_name %>
+  </div>
+  <div class="field">
+    <%= s.label :common_name %><br />
+    <%= s.text_field :common_name %>
+  </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :collection_site %><br />
+    <%= f.text_field :collection_site %>
+  </div>
+  <div class="field">
+    <%= f.label :collection_date %><br />
+    <%= f.date_select :collection_date %>
+  </div>
+  <div class="field">
+    <%= f.label :sex %><br />
+
+    <%= f.radio_button :sex, "Male" %>
+    <%= f.label :sex, "Male" %>
+
+    <%= f.radio_button :sex, "Female" %>
+    <%= f.label :sex, "Female" %>
+
+    <%= f.radio_button :sex, "N/A" %>
+    <%= f.label :sex, "N/A" %>
+  </div>
+  <div class="field">
+    <%= f.label :weight %><br />
+    <%= f.text_field :weight %>
+  </div>
+  <div class="field">
+    <%= f.label 'Adult?' %> <%= f.check_box :adult %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :picture %><br />
+    <%= f.text_field :picture %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<img src="<%= @specimen.picture %>"/>
+
+<p>
+  <b>Species name:</b>
+  <%= @specimen.species.species_name unless @specimen.species.nil? %>
+</p>
+
+<p>
+  <b>Common name:</b>
+  <%= @specimen.species.common_name unless @specimen.species.nil? %>
+</p>
+
+<p>
+  <b>Collection site:</b>
+  <%= @specimen.collection_site %>
+</p>
+
+<p>
+  <b>Collection date:</b>
+  <%= @specimen.collection_date %>
+</p>
+
+<p>
+  <b>Sex:</b>
+  <%= @specimen.sex %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%= @specimen.weight %>
+</p>
+
+<p>
+  <b>Age:</b>
+  <%= @specimen.age %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @specimen.code %>
+</p>
+
+
+<%= link_to 'Edit', edit_specimen_path(@specimen) %> |
+<%= link_to 'Back', specimens_path %>
