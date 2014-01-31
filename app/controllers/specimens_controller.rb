@@ -40,7 +40,9 @@ class SpecimensController < ApplicationController
   # POST /specimens
   # POST /specimens.json
   def create
+    # species = Species.find_by_species_name(params[:specimen][:species_attributes][:species_name])
     @specimen = Specimen.new(params[:specimen])
+    # @specimen.species_attributes = species if species.present?
 
     respond_to do |format|
       if @specimen.save

@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<img src="<%= @specimen.picture %>"/>
+<img class="show" src="<%= @specimen.picture %>"/>
 
 <p>
   <b>Species name:</b>
-  <%= @specimen.species.species_name unless @specimen.species.nil? %>
+  <i><%= @specimen.species.species_name unless @specimen.species.nil? %></i>
 </p>
 
 <p>

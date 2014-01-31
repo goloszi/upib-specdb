@@ -1,5 +1,6 @@
 class SpeciesController < ApplicationController
   def index
+    @species = Species.all
   end
 
   def create
@@ -18,5 +19,12 @@ class SpeciesController < ApplicationController
   end
 
   def destroy
+    @species = Species.find(params[:id])
+    @species.destroy
+
+    respond_to do |format|
+      format.html { redirect_to species_url }
+      format.json { head :no_content }
+    end
   end
 end

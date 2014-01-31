@@ -1,5 +1,10 @@
 Ib::Application.routes.draw do
   resources :specimens
+  resources :species
+  get 'upload' => 'upload#index'
+  get 'new_upload' => 'upload#new'
+  get 'show_upload' => 'upload#show'
+  post 'upload' => 'upload#upload'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
