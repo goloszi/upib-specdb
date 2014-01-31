@@ -1,9 +1,10 @@
-// Place all the styles related to the specimens controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-img {
-  max-height: 300px;
-  max-width: 300px;
+img.show {
+  max-height: 400px;
+  max-width: 400px;
   float:right;
+}
+
+img.index {
+  max-height: 80px;
+  max-width: 80px;
 }

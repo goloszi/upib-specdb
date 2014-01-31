@@ -20,21 +20,6 @@ ActiveRecord::Schema.define(:version => 20140131043928) do
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "specimen", :force => true do |t|
-    t.string   "collection_site"
-    t.date     "collection_date"
-    t.string   "code"
-    t.string   "picture"
-    t.integer  "sex"
-    t.decimal  "weight"
-    t.boolean  "adult"
-    t.integer  "species_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "specimen", ["species_id"], :name => "index_specimen_on_species_id"
-
   create_table "specimens", :force => true do |t|
     t.string   "collection_site"
     t.date     "collection_date"
