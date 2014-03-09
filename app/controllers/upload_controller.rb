@@ -1,6 +1,8 @@
 require 'spreadsheet'
 
 class UploadController < ApplicationController
+  @@uploads_folder = Rails.root.join('public', 'uploads')
+  
   def index
     render :action => :new
   end
@@ -12,6 +14,7 @@ class UploadController < ApplicationController
   end
 
   def upload
+    create_if_not_exists(@@uploads_folder)
     spreadsheet_file_path = copy_to_disk(params[:spreadsheet_file])
     parse_spreadsheet(spreadsheet_file_path)
     copy_to_disk(params[:trace_file])
@@ -71,10 +74,14 @@ class UploadController < ApplicationController
     end
     return rows
   end
+  
+  def create_if_not_exists(folder_path)
+    Dir.mkdir(folder_path) unless File.exists?(folder_path)
+  end
 
   def copy_to_disk(file_io)
     unless file_io.nil?
-      file_path = Rails.root.join('public', 'uploads', file_io.original_filename)
+      file_path = @@uploads_folder + file_io.original_filename
       File.open(file_path, 'wb') do |file|
         file.write(file_io.read)
       end
