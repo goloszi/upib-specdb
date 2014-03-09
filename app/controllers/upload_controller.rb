@@ -16,7 +16,7 @@ class UploadController < ApplicationController
     parse_spreadsheet(spreadsheet_file_path)
     copy_to_disk(params[:trace_file])
     copy_to_disk(params[:image_file])
-    redirect_to :controller => :upload, :action => :show
+    redirect_to :action => :show
   end
 
   def parse_spreadsheet(file_path)
@@ -28,21 +28,34 @@ class UploadController < ApplicationController
     taxonomy         = book.worksheet 1
     specimen_details = book.worksheet 2
     collection_data  = book.worksheet 3
-#    :adult, :code, :collection_date, :collection_site, :picture, :sex, :weight, :species_attributes
-    attrs = Hash.new
     start_row = 3
+    #:adult, :code, :collection_date, :collection_site, :picture, :sex, :weight, :species_attributes
     rows = count_rows(collection_data, start_row)
-    places = Array.new
+    species = Hash.new
+    specimen = Hash.new
     rows.times do |i|
       row = i + start_row - 1
-      attrs[:code] = voucher_info.row(row)[0]
-      places[0] = collection_data.row(row)[6]
-      places[1] = collection_data.row(row)[5]
-      places[2] = collection_data.row(row)[4]
-      places[3] = collection_data.row(row)[3]
-      attrs[:collection_site] = places.reject(&:nil?).join(', ') # ignore blank entries
+      species_name = taxonomy.row(row)[7]
+      common_name = taxonomy.row(row)[4]
+      @species = Species.find_or_initialize_by_species_name(species_name)
+      @species.update_attributes :common_name => common_name
+      
+      specimen[:adult] = specimen_details.row(row)[3]
+      specimen[:code] = voucher_info.row(row)[0]
+      specimen[:collection_date] = collection_data.row(row)[2]
+      specimen[:collection_site] = collection_site(collection_data.row(row))
+      specimen[:sex] = specimen_details.row(row)[1]
+      @specimen = @species.specimens.create(specimen)
     end
-    puts attrs
+  end
+  
+  def collection_site(collection_data_row)
+    places = Array.new
+    places[0] = collection_data_row[6]
+    places[1] = collection_data_row[5]
+    places[2] = collection_data_row[4]
+    places[3] = collection_data_row[3]
+    return places.reject(&:nil?).join(', ') # ignore blank entries
   end
 
   # start counting from the start row

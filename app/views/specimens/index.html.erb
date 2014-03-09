@@ -1,7 +1,13 @@
 <h1>Listing specimens</h1>
 
+<%= link_to 'New Specimen', new_specimen_path %> | <%= link_to 'Back', root_url %>
+
+<br/><br/>
+
 <table>
   <tr>
+    <th>#</th>
+    <th>Code</th>
     <th>Species name</th>
     <th>Common name</th>
     <th>Collection site</th>
@@ -9,15 +15,16 @@
     <th>Sex</th>
     <th>Weight</th>
     <th>Age</th>
-    <th>Code</th>
     <th>Picture</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @specimens.each do |specimen| %>
+<% @specimens.each_with_index do |specimen, i| %>
   <tr>
+    <td><%= i+1 %></td>
+    <td><%= specimen.code %></td>
     <td><i><%= specimen.species.species_name unless specimen.species.nil? %></i></td>
     <td><%= specimen.species.common_name unless specimen.species.nil? %></td>
     <td><%= specimen.collection_site %></td>
@@ -25,7 +32,6 @@
     <td><%= specimen.sex %></td>
     <td><%= specimen.weight %></td>
     <td><%= specimen.age %></td>
-    <td><%= specimen.code %></td>
     <td><img class="index" src="<%= specimen.picture %>"</img></td>
     <td><%= link_to 'Show', specimen %></td>
     <td><%= link_to 'Edit', edit_specimen_path(specimen) %></td>
@@ -33,7 +39,3 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Specimen', new_specimen_path %>

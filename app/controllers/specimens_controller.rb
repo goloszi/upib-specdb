@@ -43,7 +43,6 @@ class SpecimensController < ApplicationController
     # species = Species.find_by_species_name(params[:specimen][:species_attributes][:species_name])
     @specimen = Specimen.new(params[:specimen])
     # @specimen.species_attributes = species if species.present?
-
     respond_to do |format|
       if @specimen.save
         format.html { redirect_to @specimen, notice: 'Specimen was successfully created.' }
@@ -81,6 +80,12 @@ class SpecimensController < ApplicationController
       format.html { redirect_to specimens_url }
       format.json { head :no_content }
     end
+  end
+  
+  def delete_all
+    Specimen.delete_all
+    Species.delete_all
+    redirect_to :controller => :welcome, :action => :index
   end
 
 end

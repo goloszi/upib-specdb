@@ -1,4 +1,5 @@
 Ib::Application.routes.draw do
+  match 'specimens/delete_all' => 'specimens#delete_all'
   resources :specimens
   resources :species
   get 'upload' => 'upload#index'
